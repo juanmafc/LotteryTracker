@@ -8,9 +8,11 @@ namespace LotteryTrackerTests
     public class UnitTest1
     {
         [TestMethod]
-        public void TestMethod1() {
-            TestClass prueba = new TestClass();
-            Assert.AreEqual(5, prueba.dameUn5() );
+        public void TestGetWinnerNumberForAnSpecificDate() {
+            Lottery nationalLottery = new QuinielaLottery();
+            //8020 is a known number
+            Assert.AreEqual(8020, nationalLottery.getFirstNumberOn(9, 2, 2017) ) ;
         }
+
     }
 }

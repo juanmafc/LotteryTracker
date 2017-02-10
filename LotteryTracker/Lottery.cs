@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace LotteryTracker
 {
-    public class TestClass {
-
-        public int dameUn5() {
-            return 5;
-        }
-
+    public abstract class Lottery
+    {
+        public abstract int getFirstNumberOn(int day, int month, int year);
     }
 }
