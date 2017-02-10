@@ -1,0 +1,11 @@
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\LotteryTrackerTests.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\LotteryTrackerTests.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\LotteryTracker.exe
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\HtmlAgilityPack.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\LotteryTracker.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\HtmlAgilityPack.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Debug\HtmlAgilityPack.xml
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\obj\Debug\LotteryTrackerTests.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\obj\Debug\LotteryTrackerTests.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\obj\Debug\LotteryTrackerTests.pdb
