@@ -13,96 +13,28 @@ namespace LotteryTracker
 {
     class HttpWebRequest_Connection
     {
-        static void Main()
-        {
+
+        static int getWinnerNumberForDate(string date) {
             try
-            {
+            {                
 
-                // Create a new HttpWebRequest object.Make sure that 
-                // a default proxy is set if you are behind a firewall.
-
-                //HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://www.contoso.com");
-                //HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://www.loteria-nacional.gob.ar/gxpsites/hgxpp001");
-
-                //HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=09022017&tiposorteo=pri");
-                //HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=09022017&tiposorteo=mat");
-                HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=03012017&tiposorteo=pri");
-
+                //Get winner numbers
+                HttpWebRequest myHttpWebRequest1 = (HttpWebRequest) WebRequest.Create("http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=09022017&tiposorteo=pri");
                 myHttpWebRequest1.KeepAlive = false;
-                // Assign the response object of HttpWebRequest to a HttpWebResponse variable.
-                HttpWebResponse myHttpWebResponse1 = (HttpWebResponse)myHttpWebRequest1.GetResponse();
-
-                Console.WriteLine("\nThe HTTP request Headers for the first request are: \n{0}", myHttpWebRequest1.Headers);
-                Console.WriteLine("Press FAFAFA Enter Key to Continue..........");
-                Console.ReadLine();
+                HttpWebResponse myHttpWebResponse1 = (HttpWebResponse)myHttpWebRequest1.GetResponse();                
+                HtmlDocument cuerpo = new HtmlDocument();                
+                cuerpo.Load( myHttpWebResponse1.GetResponseStream() );
 
 
-                Stream streamResponse = myHttpWebResponse1.GetResponseStream();
-
-                Console.WriteLine("ACA EMPIEZA LO DE XML..........");
-
-                HtmlDocument cuerpo = new HtmlDocument();
-                Console.WriteLine("VA A HACER EL LOAD........");
-                cuerpo.Load(streamResponse);
-
+                //Get Winner Number
                 HtmlNode primeraColumna = cuerpo.GetElementbyId("Columna1Quiniela");
-                HtmlNodeCollection numeros = primeraColumna.ChildNodes;
-
-                List<HtmlNode> listaNumeros = numeros.Where(nodo => (nodo.Attributes["class"] != null && nodo.Attributes["class"].Value.Equals("BolillaVertical"))).ToList();
-                HtmlNode primerNumero = listaNumeros.ElementAt(0);
-
-
-                Console.WriteLine("Numero ganador: " + primerNumero.InnerText);
-
-
-                Console.WriteLine("ARCHIVO XML..........");
-
+                List<HtmlNode> listaNumeros = primeraColumna.ChildNodes.Where(nodo => (nodo.Attributes["class"] != null && nodo.Attributes["class"].Value.Equals("BolillaVertical"))).ToList();                
+                HtmlNode primerNumero = listaNumeros.ElementAt(0);                
+                int x = Int32.Parse(primerNumero.InnerText);
+                Console.WriteLine("Numero ganador: " + x );
                 Console.ReadLine();
-
-
-                StreamReader streamRead = new StreamReader(streamResponse);
-                Char[] readBuff = new Char[256];
-                int count = streamRead.Read(readBuff, 0, 256);
-                Console.WriteLine("The contents of the Html page are.......\n");
-
-
-                while (count > 0)
-                {
-                    String outputData = new String(readBuff, 0, count);
-                    Console.Write(outputData);
-                    count = streamRead.Read(readBuff, 0, 256);
-                }
-                Console.WriteLine();
-
-                // Close the Stream object.
-                streamResponse.Close();
-                streamRead.Close();
-                // Release the resources held by response object.
+                                                
                 myHttpWebResponse1.Close();
-
-
-
-
-
-
-                /*
-
-
-
-
-                // Create a new HttpWebRequest object for the specified Uri.
-                HttpWebRequest myHttpWebRequest2 = (HttpWebRequest)WebRequest.Create("http://www.contoso.com");
-                myHttpWebRequest2.Connection = "Close";
-                // Assign the response object of 'HttpWebRequest' to a 'HttpWebResponse' variable.
-                HttpWebResponse myHttpWebResponse2 =
-                  (HttpWebResponse)myHttpWebRequest2.GetResponse();
-                // Release the resources held by response object.
-                myHttpWebResponse2.Close();
-                Console.WriteLine("\nThe Http RequestHeaders are \n{0}", myHttpWebRequest2.Headers);
-                Console.WriteLine("\nPress 'Enter' Key to Continue.........");
-                Console.ReadLine();     
-                */
-
             }
             catch (ArgumentException e)
             {
@@ -136,6 +68,14 @@ namespace LotteryTracker
 
                 Console.ReadLine();
             }
+
+
+            return 1;
+        }
+
+
+        static void Main() {
+            getWinnerNumberForDate("09022017");
         }
     }
 
