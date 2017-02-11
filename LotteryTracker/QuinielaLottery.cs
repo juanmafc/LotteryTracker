@@ -10,7 +10,7 @@ namespace LotteryTracker
 {
     public class QuinielaLottery : Lottery
     {
-        public override int getFirstNumberOn(int day, int month, int year)
+        public override int getFirstNumberOn(string date)
         {
 
             int firstNumber = -1;
@@ -19,7 +19,8 @@ namespace LotteryTracker
             {
 
                 //Get winner numbers
-                HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create("http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=10022017&tiposorteo=mat");
+                string url = "http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=" + date + "&tiposorteo=mat";
+                HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create(url);
                 myHttpWebRequest1.KeepAlive = false;
                 HttpWebResponse myHttpWebResponse1 = (HttpWebResponse)myHttpWebRequest1.GetResponse();
                 HtmlDocument cuerpo = new HtmlDocument();
