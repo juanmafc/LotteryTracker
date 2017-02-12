@@ -120,6 +120,11 @@ namespace LotteryTracker
             }
         }
 
+        public int getLastUsedRowNumber()
+        {            
+            return this.sheet.Cells.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
+        }
+
         //        int lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
         //        Console.WriteLine(lastRow);
         //        lastRow += 1;

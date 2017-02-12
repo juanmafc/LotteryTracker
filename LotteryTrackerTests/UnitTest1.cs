@@ -125,6 +125,14 @@ namespace LotteryTrackerTests
             sheet.setCellColor(1, 1, "red");
             file.save();
         }
+        
+        [TestMethod]
+        public void TestGetLastUsedRowFromAnExcelFileWhereLastRowIsRowNumber42()
+        {
+            ExcelFile file = new ExcelFile(@"..\..\TestFiles\LastRowIs42.xlsx");
+            ExcelSheet sheet = file.getSheet(1);           
+            Assert.AreEqual(42, sheet.getLastUsedRowNumber() );
+        }
 
 
     }
