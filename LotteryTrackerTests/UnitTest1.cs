@@ -13,7 +13,7 @@ namespace LotteryTrackerTests
         public void TestGetWinnerNumberOn10thFebruary2017() {
             Lottery nationalLottery = new QuinielaLottery();
             //8020 is a known number
-            Assert.AreEqual(8020, nationalLottery.getFirstNumberOn("10022017") ) ;
+            Assert.AreEqual("8020", nationalLottery.getFirstNumberOn("10022017") ) ;
         }
 
         [TestMethod]
@@ -21,7 +21,15 @@ namespace LotteryTrackerTests
         {
             Lottery nationalLottery = new QuinielaLottery();
             //5948 is a known number
-            Assert.AreEqual(5948, nationalLottery.getFirstNumberOn("09022017") );
+            Assert.AreEqual("5948", nationalLottery.getFirstNumberOn("09022017") );
+        }
+
+        [TestMethod]
+        public void TestGetOnlyWinnerNumbersLastDigitOn9thFebruary2017()
+        {
+            Lottery nationalLottery = new QuinielaLottery();
+            //5948 is a known number
+            Assert.AreEqual("8", nationalLottery.getFirstNumberOn("09022017", 1));
         }
 
     }

@@ -4,20 +4,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace LotteryTracker
 {
     public class QuinielaLottery : Lottery
     {
-        public override int getFirstNumberOn(string date)
+        public override string getFirstNumberOn(string date)
         {
 
-            int firstNumber = -1;
+            string firstNumber = "";
 
             try
             {
 
+                //TODO: refactor this and allow to select pri/mat/ves/noc
                 //Get winner numbers
                 string url = "http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=" + date + "&tiposorteo=mat";
                 HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create(url);
@@ -31,7 +33,12 @@ namespace LotteryTracker
                 HtmlNode primeraColumna = cuerpo.GetElementbyId("Columna1Quiniela");
                 List<HtmlNode> listaNumeros = primeraColumna.ChildNodes.Where(nodo => (nodo.Attributes["class"] != null && nodo.Attributes["class"].Value.Equals("BolillaVertical"))).ToList();
                 HtmlNode primerNumero = listaNumeros.ElementAt(0);
-                firstNumber = Int32.Parse(primerNumero.InnerText);
+
+                //TODO: delete this comment
+                //firstNumber = Int32.Parse(primerNumero.InnerText);
+                firstNumber = primerNumero.InnerText;
+
+
                 Console.WriteLine("Numero ganador: " + firstNumber);
                 Console.ReadLine();
 
@@ -70,8 +77,18 @@ namespace LotteryTracker
                 Console.ReadLine();
             }
 
+            firstNumber = Regex.Replace(firstNumber, @"\t|\n|\r", "");
             return firstNumber;
             
+        }
+
+        public override string getFirstNumberOn(string date, int numberOfDigits)
+        {
+            string firstNumber = this.getFirstNumberOn(date);
+
+            firstNumber = firstNumber.Substring(firstNumber.Length - numberOfDigits);
+
+            return firstNumber;
         }
     }
 }

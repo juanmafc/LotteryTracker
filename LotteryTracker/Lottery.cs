@@ -8,6 +8,8 @@ namespace LotteryTracker
 {
     public abstract class Lottery
     {
-        public abstract int getFirstNumberOn(string date);
+        public abstract string getFirstNumberOn(string date);
+
+        public abstract string getFirstNumberOn(string date, int numberOfDigits);
     }
 }
