@@ -112,6 +112,14 @@ namespace LotteryTracker
             this.sheet.Cells[row, column] = text;
         }
 
+        public void setCellColor(int row, int column, string color)
+        {
+            if (color.Equals("red") )
+            {
+                this.sheet.Cells[row, column].Interior.Color = Excel.XlRgbColor.rgbRed;
+            }
+        }
+
         //        int lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
         //        Console.WriteLine(lastRow);
         //        lastRow += 1;

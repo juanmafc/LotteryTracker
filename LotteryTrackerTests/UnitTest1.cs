@@ -106,6 +106,19 @@ namespace LotteryTrackerTests
             }
             */
         }
+
+
+        [TestMethod]
+        public void TestPaintA1CellBackgroundRed()
+        {
+            ExcelFile file = new ExcelFile(@"..\..\TestFiles\ColorTest.xlsx");
+            ExcelSheet sheet = file.getSheet(1);
+            //TODO: use rgb to get more flexibility.
+            sheet.setCellColor(1, 1, "red");
+            file.save();
+        }
+
+
     }
     
 }
