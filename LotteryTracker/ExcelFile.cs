@@ -86,45 +86,7 @@ namespace LotteryTracker
             Marshal.ReleaseComObject(this.application);
         }
 
-    }
-
-    public class ExcelSheet
-    {
-        private Excel.Worksheet sheet;
-
-        public ExcelSheet(Excel.Worksheet sheet)
-        {
-            this.sheet = sheet;
-        }
-
-        ~ExcelSheet()
-        {
-            Marshal.ReleaseComObject(this.sheet);
-        }
-
-        public string getCellText(int row, int column)
-        {
-            return this.sheet.Cells[row, column].Value.ToString();
-        }
-
-        public void setCellText(int row, int column, string text)
-        {
-            this.sheet.Cells[row, column] = text;
-        }
-
-        public void setCellColor(int row, int column, string color)
-        {
-            if (color.Equals("red") )
-            {
-                this.sheet.Cells[row, column].Interior.Color = Excel.XlRgbColor.rgbRed;
-            }
-        }
-
-        public int getLastUsedRowNumber()
-        {            
-            return this.sheet.Cells.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
-        }
-
+    }    
         //        int lastRow = MySheet.Cells.SpecialCells(Excel.XlCellType.xlCellTypeLastCell).Row;
         //        Console.WriteLine(lastRow);
         //        lastRow += 1;
@@ -136,7 +98,5 @@ namespace LotteryTracker
         //        Console.WriteLine( cantidadDeDias );
 
         //        MyBook.Save();
-        //        MyBook.Close();
-
-    }
+        //        MyBook.Close();   
 }
