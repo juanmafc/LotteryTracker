@@ -4,16 +4,18 @@ using LotteryTracker;
 using System.IO;
 using System.Text;
 
+
 namespace LotteryTrackerTests
 {
     [TestClass]
     public class LotteryTests
     {
         [TestMethod]
-        public void TestGetWinnerNumberOn10thFebruary2017() {
+        public void TestGetWinnerNumberOn10thFebruary2017()
+        {
             Lottery nationalLottery = new QuinielaLottery();
             //8020 is a known number
-            Assert.AreEqual("8020", nationalLottery.getFirstNumberOn("10022017") ) ;
+            Assert.AreEqual("8020", nationalLottery.getFirstNumberOn("10022017"));
         }
 
         [TestMethod]
@@ -21,7 +23,7 @@ namespace LotteryTrackerTests
         {
             Lottery nationalLottery = new QuinielaLottery();
             //5948 is a known number
-            Assert.AreEqual("5948", nationalLottery.getFirstNumberOn("09022017") );
+            Assert.AreEqual("5948", nationalLottery.getFirstNumberOn("09022017"));
         }
 
         [TestMethod]
@@ -34,7 +36,7 @@ namespace LotteryTrackerTests
 
     }
 
-    
+
     [TestClass]
     public class ExcelTests
     {
@@ -51,7 +53,7 @@ namespace LotteryTrackerTests
         {
             //TODO: delete empty file and quit Excel
         }
-        
+
 
         //cleanup delete empty test file
         [TestMethod]
@@ -70,7 +72,7 @@ namespace LotteryTrackerTests
                 ExcelSheet resultSheet = secondFile.getSheet(1);
                 resultSheet.setCellText(1, 1, "PRUEBA");
                 Assert.AreEqual("PRUEBA", resultSheet.getCellText(1, 1));
-            }            
+            }
 
 
             //PROBLEMA: SI HAGO EL CLOSE, DESPUES EXPLOTA EN EL DESTRUCTOR
@@ -125,16 +127,67 @@ namespace LotteryTrackerTests
             sheet.setCellColor(1, 1, "red");
             file.save();
         }
-        
+
         [TestMethod]
         public void TestGetLastUsedRowFromAnExcelFileWhereLastRowIsRowNumber42()
         {
             ExcelFile file = new ExcelFile(@"..\..\TestFiles\LastRowIs42.xlsx");
-            ExcelSheet sheet = file.getSheet(1);           
-            Assert.AreEqual(42, sheet.getLastUsedRowNumber() );
+            ExcelSheet sheet = file.getSheet(1);
+            Assert.AreEqual(42, sheet.getLastUsedRowNumber());
         }
 
 
     }
-    
+
+    [TestClass]
+    public class StringDateTests
+    {
+
+        [TestMethod]
+        public void TestCreateAStringDateAndGetItInDDMMYYYYformat()
+        {
+            StringDate date = new StringDate(1, 2, 2017);
+            Assert.AreEqual("01022017", date.getDate());
+        }
+
+        [TestMethod]
+        public void TestIncrementDateByOneDay()
+        {
+            StringDate date = new StringDate(1, 1, 2017);
+            date.nextDay();
+            Assert.AreEqual("02012017", date.getDate() );
+        }
+
+        [TestMethod]
+        public void TestIncrementDateByOneDayAndThatIncrementChangesTheMonth()
+        {
+            StringDate date = new StringDate(31, 1, 2017);
+            date.nextDay();
+            Assert.AreEqual("01022017", date.getDate());
+        }
+
+        [TestMethod]
+        public void TestIncrementDateByOneDayAndThatIncrementChangesTheYear()
+        {
+            StringDate date = new StringDate(31, 12, 2015);
+            date.nextDay();
+            Assert.AreEqual("01012016", date.getDate());
+        }
+
+        [TestMethod]
+        public void TestCheckIfIsSundayReturnsTrueOnASundayDate()
+        {
+            //12nd February 2017 was on Sunday
+            StringDate date = new StringDate(12, 2, 2017);
+            Assert.IsTrue(date.isSunday());
+        }
+
+        [TestMethod]
+        public void TestCheckIfIsSundayReturnsFalseOnANonSundayDate()
+        {
+            //3rd February 2017 was on Friday
+            StringDate date = new StringDate(3, 2, 2017);
+            Assert.IsFalse(date.isSunday());
+        }
+    }
 }
