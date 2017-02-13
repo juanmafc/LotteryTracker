@@ -7,3 +7,4 @@ C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Debug\HtmlAgilityPack.
 C:\Users\User\Documents\LotteryTracker\LotteryTracker\obj\Debug\LotteryTracker.csprojResolveAssemblyReference.cache
 C:\Users\User\Documents\LotteryTracker\LotteryTracker\obj\Debug\LotteryTracker.exe
 C:\Users\User\Documents\LotteryTracker\LotteryTracker\obj\Debug\LotteryTracker.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Debug\System.Drawing.Primitives.dll

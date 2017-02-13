@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Drawing;
 
 namespace LotteryTracker
 {
@@ -32,13 +33,13 @@ namespace LotteryTracker
             this.sheet.Cells[row, column] = text;
         }
 
-        public void setCellColor(int row, int column, string color)
+
+
+        public void setCellColor(int row, int column, int red, int green, int blue)
         {
-            if (color.Equals("red"))
-            {
-                this.sheet.Cells[row, column].Interior.Color = Excel.XlRgbColor.rgbRed;
-            }
+            this.sheet.Cells[row, column].Interior.Color = Color.FromArgb(red, green, blue);
         }
+
 
         public int getLastUsedRowNumber()
         {

@@ -94,7 +94,7 @@ namespace LotteryTrackerTests
             ExcelFile file = new ExcelFile(@"..\..\TestFiles\ColorTest.xlsx");
             ExcelSheet sheet = file.getSheet(1);
             //TODO: use rgb to get more flexibility.
-            sheet.setCellColor(1, 1, "red");
+            sheet.setCellColor(1, 1, 255, 0, 0);
             file.save();
         }
 
