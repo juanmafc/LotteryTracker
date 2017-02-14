@@ -25,7 +25,15 @@ namespace LotteryTracker
 
         public string getCellText(int row, int column)
         {
-            return this.sheet.Cells[row, column].Value.ToString();
+            if (this.sheet.Cells[row, column].Value != null)
+            {
+                return this.sheet.Cells[row, column].Value.ToString();
+            }
+            else
+            {
+                return "";
+            }
+            
         }
 
         public void setCellText(int row, int column, string text)
