@@ -34,5 +34,13 @@ namespace LotteryTrackerTests
             Assert.AreEqual("8", nationalLottery.getFirstNumberOn("09022017", 1));
         }
 
+        [TestMethod]
+        public void TestWinnerNumberOnADayWithNoResultsReturnsAnEmptyString()
+        {
+            Lottery nationalLottery = new QuinielaLottery();
+            //05022017 was Sunday, no results
+            Assert.AreEqual("", nationalLottery.getFirstNumberOn("05022017", 1));
+        }
+
     }    
 }

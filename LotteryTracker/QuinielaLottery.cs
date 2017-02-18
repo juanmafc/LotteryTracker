@@ -34,13 +34,7 @@ namespace LotteryTracker
                 List<HtmlNode> listaNumeros = primeraColumna.ChildNodes.Where(nodo => (nodo.Attributes["class"] != null && nodo.Attributes["class"].Value.Equals("BolillaVertical"))).ToList();
                 HtmlNode primerNumero = listaNumeros.ElementAt(0);
 
-                //TODO: delete this comment
-                //firstNumber = Int32.Parse(primerNumero.InnerText);
                 firstNumber = primerNumero.InnerText;
-
-
-                Console.WriteLine("Numero ganador: " + firstNumber);
-                Console.ReadLine();
 
                 myHttpWebResponse1.Close();
             }
@@ -86,8 +80,10 @@ namespace LotteryTracker
         {
             string firstNumber = this.getFirstNumberOn(date);
 
-            firstNumber = firstNumber.Substring(firstNumber.Length - numberOfDigits);
-
+            if (firstNumber.Length > 0)
+            {
+                firstNumber = firstNumber.Substring(firstNumber.Length - numberOfDigits);
+            }            
             return firstNumber;
         }
     }
