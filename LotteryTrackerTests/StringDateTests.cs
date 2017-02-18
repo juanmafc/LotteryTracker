@@ -56,5 +56,26 @@ namespace LotteryTrackerTests
             StringDate date = new StringDate(3, 2, 2017);
             Assert.IsFalse(date.isSunday());
         }
+
+        [TestMethod]
+        public void TestGetStringDateDayNumber()
+        {            
+            StringDate date = new StringDate(3, 2, 2017);
+            Assert.AreEqual(3, date.getDayNumber());
+        }
+
+        [TestMethod]
+        public void TestGetStringDateMonthNumber()
+        {
+            StringDate date = new StringDate(3, 2, 2017);
+            Assert.AreEqual(2, date.getMonthNumber());
+        }
+
+        [TestMethod]
+        public void TestGetStringDateYearNumber()
+        {
+            StringDate date = new StringDate(3, 2, 2017);
+            Assert.AreEqual(2017, date.getYearNumber());
+        }
     }
 }

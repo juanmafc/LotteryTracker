@@ -31,6 +31,21 @@ namespace LotteryTracker
         {
             return ( this.date.DayOfWeek == DayOfWeek.Sunday );
         }
+
+        public int getDayNumber()
+        {
+            return this.date.Day;
+        }
+
+        public int getMonthNumber()
+        {
+            return this.date.Month;
+        }
+
+        public int getYearNumber()
+        {
+            return this.date.Year;
+        }
     }
 
 }
