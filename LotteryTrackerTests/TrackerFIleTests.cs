@@ -21,15 +21,22 @@ namespace LotteryTrackerTests
         [TestMethod]
         public void TestTrackerFileAddAnEntryForAWinningNumber5OnFebruary12th2017()
         {
-            TrackerFile file = new TrackerFile(@"..\..\TestFiles\LotteryTrackerFile2.xlsx");                       
+            TrackerFile file = new TrackerFile(@"..\..\TestFiles\LotteryTrackerFile2.xlsx");
             file.addEntryForWinningNumber(12, 2, 2017, "3");
-            
-            for (int i = 0; i < 20; i ++)
-            {
-                Random rd = new Random();
-                file.addEntryForWinningNumber(12, 2, 2017, rd.Next(10).ToString() );
+            /*
+            for (int i = 0; i < 50; i ++)
+            {                            
+                if ( (i % 7) == 0 )
+                {
+                    file.addEmptyEntry(12, 2, 2017);
+                }
+                else
+                {
+                    Random rd = new Random();
+                    file.addEntryForWinningNumber(12, 2, 2017, rd.Next(10).ToString());
+                }
             }
-            
+            */
             //TODO: automate this assert
         }
     }

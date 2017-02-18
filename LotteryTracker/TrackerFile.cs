@@ -85,24 +85,50 @@ namespace LotteryTracker
             if (days.Equals("SALIO"))
             {
                 sheet.setCellText(newRow, column, "1 DIA");
+                this.colorizeCellAccordingToDaysPassed(newRow, column, 1, sheet);
             }
             else if (days.Equals("1 DIA"))
             {
                 sheet.setCellText(newRow, column, "2 DIAS");
+                this.colorizeCellAccordingToDaysPassed(newRow, column, 2, sheet);
             }
             else
             {
                 days = days.Replace(" DIAS", "");
-                int numberOfDays = Int32.Parse(days);
+                int numberOfDays = Int32.Parse(days);                
                 numberOfDays++;
 
+                this.colorizeCellAccordingToDaysPassed(newRow, column, numberOfDays, sheet);
                 days = numberOfDays.ToString() + " DIAS";
                 sheet.setCellText(newRow, column, days);
             }
         }
 
+        private void colorizeCellAccordingToDaysPassed(int row, int column, int numberOfDays, ExcelSheet sheet)
+        {            
+            if( this.numberIsInBetween(numberOfDays, 1, 7) )
+            {               
+               sheet.setCellColor(row, column, 153, 255, 102);
+            }
+            else if (this.numberIsInBetween(numberOfDays, 8, 14))
+            {
+                sheet.setCellColor(row, column, 255, 255, 102);
+            }
+            else if (this.numberIsInBetween(numberOfDays, 15, 25))
+            {
+                sheet.setCellColor(row, column, 83, 142,213);                
+            }
+            else if ( 25 < numberOfDays)
+            {
+                sheet.setCellColor(row, column, 255, 0, 0);                
+            }            
 
+        }
 
+        private bool numberIsInBetween(int numberOfDays, int num1, int num2)
+        {
+            return ( (num1 <= numberOfDays) && (numberOfDays <= num2) );
+        }
 
         private bool isRowAnEmptyEntry(ExcelSheet sheet, int row)
         {
