@@ -11,6 +11,18 @@ namespace LotteryTracker
 {
     public class QuinielaLottery : Lottery
     {
+        private string selectedLottery;
+
+        public QuinielaLottery()
+        {
+            this.selectedLottery = "mat";
+        }
+
+        public QuinielaLottery(string selectedLottery)
+        {
+            this.selectedLottery = selectedLottery;
+        }
+
         public override string getFirstNumberOn(string date)
         {
 
@@ -21,7 +33,8 @@ namespace LotteryTracker
 
                 //TODO: refactor this and allow to select pri/mat/ves/noc
                 //Get winner numbers
-                string url = "http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=" + date + "&tiposorteo=mat";
+                //string url = "http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=" + date + "&tiposorteo=mat";
+                string url = "http://www.loteria-nacional.gob.ar/Internet/Extractos/resultados_i.php?juego=quiniela&fechasorteo=" + date + "&tiposorteo=" + this.selectedLottery;
                 HttpWebRequest myHttpWebRequest1 = (HttpWebRequest)WebRequest.Create(url);
                 myHttpWebRequest1.KeepAlive = false;
                 HttpWebResponse myHttpWebResponse1 = (HttpWebResponse)myHttpWebRequest1.GetResponse();

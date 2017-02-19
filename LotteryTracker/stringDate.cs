@@ -9,7 +9,6 @@ namespace LotteryTracker
     public class StringDate
     {
         private DateTime date;
-        private string stringDate;
 
         public StringDate(int day, int month, int year)
         {
