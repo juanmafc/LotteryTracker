@@ -14,6 +14,8 @@ namespace LotteryTracker
         private SortedDictionary<int, string> monthsMap;
         private SortedDictionary<int, string> columnsToNumbersMap;
 
+        private SortedDictionary<int, bool> drawnNumbers;
+
         public TrackerFile(string path)
         {
             this.file = new ExcelFile(path);
@@ -43,21 +45,52 @@ namespace LotteryTracker
             this.columnsToNumbersMap[11] = "7";
             this.columnsToNumbersMap[12] = "8";
             this.columnsToNumbersMap[13] = "9";
+
+
+            this.drawnNumbers = new SortedDictionary<int, bool>();
+            this.findDrawnNumbers();
         }
 
+        private void findDrawnNumbers()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                this.drawnNumbers[i] = false;
+            }
+
+            ExcelSheet sheet = this.file.getSheet(1);
+            int lastRow = sheet.getLastUsedRowNumber();
+            
+            while (lastRow > 1)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    if ( !this.numberHasBeenDrawn(i) )
+                    {
+                        if ( !sheet.getCellText(lastRow, i + 4 ).Equals("") )
+                        {
+                            this.drawnNumbers[i] = true;
+                        }
+                    }
+                }
+                lastRow--;
+            }
+                
+            
+        }
+
+        //TODO: add it for a Lottery name, if it doesn't exists, create and initialize it (write the header)
         public void addEntryForWinningNumber(int day, int month, int year, string winningNumber)
         {
-            ExcelSheet sheet = this.file.getSheet(3);
+            ExcelSheet sheet = this.file.getSheet(1);
             int lastRow = sheet.getLastUsedRowNumber();
             int newRow =  lastRow + 1;
-
-
             
             sheet.setCellText(newRow, 1, day.ToString());
-            sheet.setCellText(newRow, 2, this.getMonthAsString(month));
+            sheet.setCellText(newRow, 2, this.getMonthAsString(month) + "-" + year.ToString());
             sheet.setCellText(newRow, 3, winningNumber);
             
-            while ( this.isRowAnEmptyEntry(sheet, lastRow) )
+            while ( this.isRowAnEmptyEntry(sheet, lastRow) && lastRow > 1)
             {
                 lastRow--;
             }
@@ -68,14 +101,27 @@ namespace LotteryTracker
                 {
                     sheet.setCellText(newRow, i, "SALIO");
                     sheet.setCellColor(newRow, i, 0, 255, 255);
+                    this.drawnNumbers[i - 4] = true;
                 }
                 else
                 {
-                    this.addNonWinningEntry(lastRow, i, newRow, sheet);                    
+                    if (this.numberHasBeenDrawn(i - 4))
+                    {
+                        this.addNonWinningEntry(lastRow, i, newRow, sheet);
+                    }
+                    else
+                    {
+                        sheet.setCellColor(newRow, i, 0, 0, 0);
+                    }                    
                 }
             }
             this.file.save();
 
+        }
+
+        private bool numberHasBeenDrawn(int number)
+        {
+            return this.drawnNumbers[number];
         }
 
         private void addNonWinningEntry(int lastRow, int column, int newRow, ExcelSheet sheet )
@@ -114,11 +160,11 @@ namespace LotteryTracker
             {
                 sheet.setCellColor(row, column, 255, 255, 102);
             }
-            else if (this.numberIsInBetween(numberOfDays, 15, 25))
+            else if (this.numberIsInBetween(numberOfDays, 15, 28))
             {
                 sheet.setCellColor(row, column, 83, 142,213);                
             }
-            else if ( 25 < numberOfDays)
+            else if ( 28 <= numberOfDays)
             {
                 sheet.setCellColor(row, column, 255, 0, 0);                
             }            
@@ -145,7 +191,7 @@ namespace LotteryTracker
 
         public void addEmptyEntry(int day, int month, int year)
         {
-            ExcelSheet sheet = this.file.getSheet(3);
+            ExcelSheet sheet = this.file.getSheet(1);
             int newRow = sheet.getLastUsedRowNumber() + 1;
 
             sheet.setCellText(newRow, 1, day.ToString() );
