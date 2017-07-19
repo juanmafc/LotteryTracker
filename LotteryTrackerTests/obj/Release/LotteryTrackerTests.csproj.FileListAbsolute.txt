@@ -1,0 +1,10 @@
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\LotteryTrackerTests.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\LotteryTrackerTests.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\LotteryTracker.exe
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\HtmlAgilityPack.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\LotteryTracker.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\HtmlAgilityPack.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\bin\Release\HtmlAgilityPack.xml
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\obj\Release\LotteryTrackerTests.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\obj\Release\LotteryTrackerTests.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTrackerTests\obj\Release\LotteryTrackerTests.pdb

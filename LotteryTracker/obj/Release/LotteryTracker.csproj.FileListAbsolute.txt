@@ -1,0 +1,9 @@
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\LotteryTracker.exe.config
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\LotteryTracker.exe
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\LotteryTracker.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\HtmlAgilityPack.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\System.Drawing.Primitives.dll
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\HtmlAgilityPack.pdb
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\bin\Release\HtmlAgilityPack.xml
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\obj\Release\LotteryTracker.exe
+C:\Users\User\Documents\LotteryTracker\LotteryTracker\obj\Release\LotteryTracker.pdb

@@ -64,6 +64,7 @@
     <Compile Include="QuinielaLottery.cs" />
     <Compile Include="StringDate.cs" />
     <Compile Include="TrackerFile.cs" />
+    <Compile Include="UruguayLottery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
