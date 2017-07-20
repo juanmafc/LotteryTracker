@@ -11,7 +11,5 @@ function getPreviousDayResults() {
 
 resultsIframe.ready(function() {            
     resultsIframe.bind("load", getPreviousDayResults);
-    //Save winner numbers
-    //resultsIframe.contents().find("form")[0].submit();//First submit
     resultsIframe.contentWindow.location.reload(true);
 });
