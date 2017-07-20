@@ -1,14 +1,13 @@
 var referenciaAlBoton = document.getElementById("buttonIrLoteria");
-referenciaAlBoton.addEventListener("click", funcionAlClickearBoton);
+referenciaAlBoton.addEventListener("click", goToLoteriaURL);
 
 
 
-function funcionAlClickearBoton() {
-    console.log("1\n");
-    //https://www.w3schools.com/xml/xml_http.asp
-    //http://stackoverflow.com/questions/247483/http-get-request-in-javascript
-    //var requester = new XMLHttpRequest();
-    //requester.open()
+function goToLoteriaURL() {        
+    var updatedTabProperties = {
+     url: "http://www.loteriasmundiales.com.ar/"
+    };
+    chrome.tabs.update(updatedTabProperties);    
 }
 
 
