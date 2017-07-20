@@ -13,3 +13,10 @@ resultsIframe.ready(function() {
     resultsIframe.bind("load", getPreviousDayResults);
     resultsIframe.contentWindow.location.reload(true);
 });
+
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log("Mensaje recibido");
+    console.log(request.daysCount);
+  });
