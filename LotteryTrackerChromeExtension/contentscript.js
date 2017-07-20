@@ -1,18 +1,17 @@
+var resultsIframe = $('body>center>table>tbody>tr>td>table>tbody>tr:nth-child(3)>td:nth-child(2)>table>tbody>tr:nth-child(2)>td>table>tbody>tr>td:nth-child(4)>iframe');
+
 var i = 0;
-function buscarDeNuevo() {
+function getPreviousDayResults() {
     if (i < 5 ){
-        i++
-        var referencia = $('body>center>table>tbody>tr>td>table>tbody>tr:nth-child(3)>td:nth-child(2)>table>tbody>tr:nth-child(2)>td>table>tbody>tr>td:nth-child(4)>iframe');
-        referencia.ready(function() {
-            referencia.contents().find("form")[0].submit();
-        });
+        i++;
+        //Save winner numbers
+        resultsIframe.contents().find("form")[0].submit();
     }
 }
 
-
-var referencia;
-referencia = $('body>center>table>tbody>tr>td>table>tbody>tr:nth-child(3)>td:nth-child(2)>table>tbody>tr:nth-child(2)>td>table>tbody>tr>td:nth-child(4)>iframe');
-referencia.ready(function() {    
-    referencia.bind("load", buscarDeNuevo);
-    referencia.contents().find("form")[0].submit();
+resultsIframe.ready(function() {            
+    resultsIframe.bind("load", getPreviousDayResults);
+    //Save winner numbers
+    //resultsIframe.contents().find("form")[0].submit();//First submit
+    resultsIframe.contentWindow.location.reload(true);
 });
