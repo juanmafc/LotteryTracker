@@ -1,21 +1,6 @@
 $("body").append('Test');
 
-//$("Action").submit($("ultimo"));
-/*
-console.log("2 vez?");
-$('Action').val('TESTING');
-console.log("2 vez?");
-*/
-/*
-var referencia = $('#Action');
-console.log(referencia);
-referencia.attr("value", "LCDTMAB");
-$("#form1").submit($("ultimo"));
-*/
 var referencia;
-console.log(referencia);
-console.log(document);
-//referencia = document.getElementsByTagName("form1");
 
 
 
