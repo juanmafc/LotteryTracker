@@ -11,9 +11,15 @@ function saveDateResultsAsReadableText(dateResults) {
 
     var everyResultString = "";    
     for (var i = 0; i < results.length; i++) {
-        var resultString = results[i].name + ":";
+        var resultString = results[i].name.replace("\t", "");        
         for (var j = 0; j < 4; j++ ) {
-            resultString += results[i].results[j] + " ";
+            var winningNumber = results[i].results[j];
+            if (winningNumber == " ") {
+                resultString += "," + "NADA";    
+            }
+            else {
+                resultString += "," + winningNumber;
+            }            
         }        
         everyResultString += resultString  + "\r\n";
     }
