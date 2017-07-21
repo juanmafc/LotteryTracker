@@ -1,15 +1,25 @@
 
 var resultsIframe; 
-var i = 0;
+var pastDays = 0;
 var previousDaysCount = 0;
 
 
 
-function saveDateResultsAsReadableText(dateResults) {
-    //var resultsString = dateResults.date + "\n HOLA MIGUEL"; + dateResults.results;
-    var resultsString = dateResults.date;
-    var blob = new Blob(["FAFAFAFAFFAFAFAFA"], {type: 'text/plain'});    
-    resultsFileWritter.write(blob);
+function saveDateResultsAsReadableText(dateResults) {    
+    var dateString = dateResults.date + "\r\n";    
+    var results = dateResults.results;    
+
+    var everyResultString = "";    
+    for (var i = 0; i < results.length; i++) {
+        var resultString = results[i].name + ":";
+        for (var j = 0; j < 4; j++ ) {
+            resultString += results[i].results[j] + " ";
+        }        
+        everyResultString += resultString  + "\r\n";
+    }
+    everyResultString += "\r\n";
+    var blob = new Blob([dateString, everyResultString], {type: 'text/plain'});    
+    resultsFileWritter.write(blob); 
 }
 
 
@@ -50,11 +60,16 @@ function saveResultsAndGoToPreviousDay() {
 
 function getPreviousDayResults() {
     //Alternative: while(lastDay != currentDay)
-    if (i < previousDaysCount ){
-        i++;        
+    if (pastDays < previousDaysCount ){
+        pastDays++;        
         setTimeout(saveResultsAndGoToPreviousDay, 150);
         //NOTE: this line resultsIframe.contents().find("form")[0].submit(); would be executed INMEDIATLY after calling the previous method
     }
+    else {
+        chrome.runtime.sendMessage({url: resultsFile.toURL()});
+        //Downloads are only supported on background
+     }
+
 }
 
 function startPreviousDaysResultsSearch() {
@@ -108,13 +123,11 @@ var resultsFileWritter;
 function onInitFs(fs) {    
 
     fs.root.getFile('resultados.txt', {create: true}, function(fileEntry) {      
-        // Create a FileWriter object for our FileEntry (log.txt).        
-        fileEntry.createWriter(function(fileWriter) {
-
-            fileWriter.onwriteend = function(e) {
-                resultsFile = fileEntry; 
-                chrome.runtime.sendMessage({url: fileEntry.toURL()});
-                //Downloads are only supported on background                
+        // Create a FileWriter object for our FileEntry (log.txt).                
+        resultsFile = fileEntry; 
+        fileEntry.createWriter(function(fileWriter) {            
+            fileWriter.onwriteend = function(e) {                
+                //Append
             };    
 
             fileWriter.onerror = function(e) {
@@ -140,8 +153,7 @@ function mesaggeListener(request, sender, sendResponse) {
         startPreviousDaysResultsSearch();
     }
     else {
-        if (request.downloadComplete) {
-            console.log("Respuesta");
+        if (request.downloadComplete) {            
             resultsFile.remove(function() {
                 console.log('File removed.');
             }, errorHandler);
