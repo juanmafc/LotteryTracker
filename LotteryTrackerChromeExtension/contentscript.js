@@ -171,7 +171,7 @@ function mesaggeListener(request, sender, sendResponse) {
     if (request.daysCount != undefined){
         previousDaysCount = request.daysCount;
         window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
-        window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+        window.requestFileSystem(window.TEMPORARY, previousDaysCount*1024 /*1K per day*/, onInitFs, errorHandler);
         startPreviousDaysResultsSearch();
     }
     else {
