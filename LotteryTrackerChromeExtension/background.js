@@ -20,3 +20,13 @@ function searchPreviousDaysResults() {
 
 
 
+
+chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
+    console.log(request.url);
+    chrome.downloads.download({
+        url: request.url,
+        filename: "fileName.txt" // Optional
+    });
+})
+
+

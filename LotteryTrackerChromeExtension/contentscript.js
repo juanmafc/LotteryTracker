@@ -23,7 +23,7 @@ function saveResultsAndGoToPreviousDay() {
             };            
             dateResults.results.push(lottery);
         }
-    });        
+    });
     
     var lotteryIndex = -1;
     resultsIframe.contents().find(".cab_num").each(function( index ) {        
@@ -53,9 +53,88 @@ function startPreviousDaysResultsSearch() {
     });    
 }
 
-function mensajesListener(request, sender, sendResponse) {        
-    previousDaysCount = request.daysCount;
-    startPreviousDaysResultsSearch();
+
+
+
+
+
+
+
+
+
+
+
+
+
+function errorHandler(e) {
+  var msg = '';
+
+  switch (e.code) {
+    case FileError.QUOTA_EXCEEDED_ERR:
+      msg = 'QUOTA_EXCEEDED_ERR';
+      break;
+    case FileError.NOT_FOUND_ERR:
+      msg = 'NOT_FOUND_ERR';
+      break;
+    case FileError.SECURITY_ERR:
+      msg = 'SECURITY_ERR';
+      break;
+    case FileError.INVALID_MODIFICATION_ERR:
+      msg = 'INVALID_MODIFICATION_ERR';
+      break;
+    case FileError.INVALID_STATE_ERR:
+      msg = 'INVALID_STATE_ERR';
+      break;
+    default:
+      msg = 'Unknown Error';
+      break;
+  };
+
+  console.log('Error: ' + msg);
 }
 
-chrome.runtime.onMessage.addListener(mensajesListener);
+
+
+var archivo;
+
+function onInitFs(fs) {
+
+  fs.root.getFile('log.txt', {create: true}, function(fileEntry) {
+    // Create a FileWriter object for our FileEntry (log.txt).
+    fileEntry.createWriter(function(fileWriter) {
+        fileWriter.onwriteend = function(e) {
+            console.log('Write completed.');
+            console.log( archivo.toURL() );
+            chrome.runtime.sendMessage({url: archivo.toURL()});
+            //Downloads are only supported on background            
+        };    
+
+        fileWriter.onerror = function(e) {
+            console.log('Write failed: ' + e.toString());
+        };
+
+        // Create a new Blob and write it to log.txt.
+        var blob = new Blob(['Lorem Ipsum'], {type: 'text/plain'});
+
+        archivo = fileEntry;
+        fileWriter.write(blob);
+
+    }, errorHandler);
+  }, errorHandler);
+}
+
+
+function mesaggeListener(request, sender, sendResponse) {        
+    previousDaysCount = request.daysCount;
+    
+
+    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;    
+    window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+    //startPreviousDaysResultsSearch();
+}
+
+
+
+
+
+chrome.runtime.onMessage.addListener(mesaggeListener);
