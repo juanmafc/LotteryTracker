@@ -18,19 +18,35 @@ function saveDateResultsAsReadableText(dateResults) {
         everyResultString += resultString  + "\r\n";
     }
     everyResultString += "\r\n";
-    var blob = new Blob([dateString, everyResultString], {type: 'text/plain'});    
+    var blob = new Blob([dateString, everyResultString], {type: 'text/plain'});
     resultsFileWritter.write(blob); 
 }
 
 
-function saveResultsAndGoToPreviousDay() {    
-    //Save winner numbers
+var previousDay;
+function saveResultsAndGoToPreviousDay() {        
+    
+    var today;
+    if (pastDays == 1) {        
+        today = "";
+        var currentDay = resultsIframe.contents().find("#Select1")[0];
+        today += currentDay.options[currentDay.selectedIndex].text +"/";
+        
+        var currentMonth = resultsIframe.contents().find("#Select2")[0];
+        today += currentMonth.options[currentMonth.selectedIndex].text +"/";
 
-    var date = resultsIframe.contents().find("#ultimo").attr("value");    
+        var currentYear = resultsIframe.contents().find("#Select3")[0];
+        today += currentYear.options[currentYear.selectedIndex].text;
 
+        previousDay = resultsIframe.contents().find("#ultimo").attr("value");
+    }
+    else{
+        today = previousDay;
+        previousDay = resultsIframe.contents().find("#ultimo").attr("value");
+    }
 
     var dateResults = {
-        date : date,
+        date : today,
         results : []
     };
     
@@ -127,7 +143,7 @@ function onInitFs(fs) {
         resultsFile = fileEntry; 
         fileEntry.createWriter(function(fileWriter) {            
             fileWriter.onwriteend = function(e) {                
-                //Append
+                //Currently not needed 
             };    
 
             fileWriter.onerror = function(e) {
