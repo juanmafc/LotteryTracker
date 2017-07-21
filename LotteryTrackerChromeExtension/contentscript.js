@@ -3,11 +3,20 @@ var resultsIframe;
 var i = 0;
 var previousDaysCount = 0;
 
+
+
+function saveDateResultsAsReadableText(dateResults) {
+    //var resultsString = dateResults.date + "\n HOLA MIGUEL"; + dateResults.results;
+    var resultsString = dateResults.date;
+    var blob = new Blob(["FAFAFAFAFFAFAFAFA"], {type: 'text/plain'});    
+    resultsFileWritter.write(blob);
+}
+
+
 function saveResultsAndGoToPreviousDay() {    
     //Save winner numbers
 
-    var date = resultsIframe.contents().find("#ultimo").attr("value");
-    console.log(date);
+    var date = resultsIframe.contents().find("#ultimo").attr("value");    
 
 
     var dateResults = {
@@ -31,10 +40,13 @@ function saveResultsAndGoToPreviousDay() {
             lotteryIndex++;
         }
         dateResults.results[lotteryIndex].results.push(this.innerText);                
-    });
-    console.log(dateResults);
+    });    
+    saveDateResultsAsReadableText(dateResults);
     resultsIframe.contents().find("#form1").submit();
 }
+
+
+
 
 function getPreviousDayResults() {
     //Alternative: while(lastDay != currentDay)
@@ -52,9 +64,6 @@ function startPreviousDaysResultsSearch() {
         resultsIframe[0].contentWindow.location.reload(true);        
     });    
 }
-
-
-
 
 
 
@@ -89,48 +98,55 @@ function errorHandler(e) {
       msg = 'Unknown Error';
       break;
   };
-
   console.log('Error: ' + msg);
 }
 
 
+var resultsFile;
+var resultsFileWritter;
 
-var archivo;
+function onInitFs(fs) {    
 
-function onInitFs(fs) {
+    fs.root.getFile('resultados.txt', {create: true}, function(fileEntry) {      
+        // Create a FileWriter object for our FileEntry (log.txt).        
+        fileEntry.createWriter(function(fileWriter) {
 
-  fs.root.getFile('log.txt', {create: true}, function(fileEntry) {
-    // Create a FileWriter object for our FileEntry (log.txt).
-    fileEntry.createWriter(function(fileWriter) {
-        fileWriter.onwriteend = function(e) {
-            console.log('Write completed.');
-            console.log( archivo.toURL() );
-            chrome.runtime.sendMessage({url: archivo.toURL()});
-            //Downloads are only supported on background            
-        };    
+            fileWriter.onwriteend = function(e) {
+                resultsFile = fileEntry; 
+                chrome.runtime.sendMessage({url: fileEntry.toURL()});
+                //Downloads are only supported on background                
+            };    
 
-        fileWriter.onerror = function(e) {
-            console.log('Write failed: ' + e.toString());
-        };
+            fileWriter.onerror = function(e) {
+                console.log('Write failed: ' + e.toString());
+            };
+            resultsFileWritter = fileWriter;
+        }, errorHandler);
 
-        // Create a new Blob and write it to log.txt.
-        var blob = new Blob(['Lorem Ipsum'], {type: 'text/plain'});
 
-        archivo = fileEntry;
-        fileWriter.write(blob);
-
-    }, errorHandler);
-  }, errorHandler);
+    }, errorHandler);  
 }
 
 
-function mesaggeListener(request, sender, sendResponse) {        
-    previousDaysCount = request.daysCount;
-    
 
-    window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;    
-    window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
-    //startPreviousDaysResultsSearch();
+
+function mesaggeListener(request, sender, sendResponse) { 
+    console.log("Request:");
+    console.log(request);
+    if (request.daysCount != undefined){
+        previousDaysCount = request.daysCount;
+        window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
+        window.requestFileSystem(window.TEMPORARY, 1024*1024, onInitFs, errorHandler);
+        startPreviousDaysResultsSearch();
+    }
+    else {
+        if (request.downloadComplete) {
+            console.log("Respuesta");
+            resultsFile.remove(function() {
+                console.log('File removed.');
+            }, errorHandler);
+        }
+    }
 }
 
 

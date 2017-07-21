@@ -21,12 +21,36 @@ function searchPreviousDaysResults() {
 
 
 
-chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {
-    console.log(request.url);
+chrome.runtime.onMessage.addListener( function(request, sender, sendResponse) {    
+
+    var resultsFileId = -1;
+
+    chrome.downloads.onChanged.addListener(function(downloadDelta) {
+        var changedId = downloadDelta.id;
+        if (changedId == resultsFileId) {
+            chrome.downloads.search({id: changedId}, function(downloadItem) {
+                console.log(downloadItem);
+                if (downloadItem[0].state == "complete") {
+                    //If results download is completeled                    
+                    //Instead of using sendResponse, send a new message
+                    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {        
+                        chrome.tabs.sendMessage( tabs[0].id, {downloadComplete: true} );
+                    });
+                }                
+            });
+        }
+    });
+
     chrome.downloads.download({
         url: request.url,
-        filename: "fileName.txt" // Optional
-    });
+        filename: "resultados.txt" // Optional
+    }, function(downloadId){
+        resultsFileId = downloadId;
+        console.log(downloadId);        
+    });  
+
+            
+    
 })
 
 
